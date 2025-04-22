@@ -5,6 +5,7 @@ import MovieList from '../../components/MovieList/MovieList';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import css from "./MoviesPage.module.css"
 
+
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +29,7 @@ const MoviesPage = () => {
       .catch(err => {
         setError('Сталася помилка під час пошуку. Спробуйте пізніше.');
         console.error('Error searching movies:', err.message);
+        setMovies([]);
       });
   }, [query]);
 
@@ -44,14 +46,20 @@ const MoviesPage = () => {
   return (
     <div>
       <h1 className={css.titleSearch }>Search Movies</h1>
-      <form onSubmit={handleSubmit}>
-        <input className={css.inputSearch}type="text" name="search" defaultValue={query} placeholder="Enter the movie title..."/>
+      <form onSubmit={handleSubmit}  className={css.formSearch}>
+        <input
+          className={css.inputSearch}
+          type="text"
+          name="search"
+          defaultValue={query}
+          placeholder="Enter the movie title..." />
         <button className={ css.btnSearch}type="submit">Search</button>
       </form>
-      {error && <p className={css.errorMessage}>{error}</p>}
-      {/* {error && <NotFoundPage message={error} showHomeLink={false} />} */}
+
+       {error && <NotFoundPage message={error} showHomeLink={false} />}
+      {!error && movies.length > 0 && <MovieList movies={movies} />}
      
-      {movies.length > 0 && <MovieList movies={movies} />}
+      {/* {movies.length > 0 && <MovieList movies={movies} />} */}
     </div>
   );
 };
