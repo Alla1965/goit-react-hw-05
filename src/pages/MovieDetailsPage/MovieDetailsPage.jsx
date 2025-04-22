@@ -10,7 +10,7 @@ const MovieDetailsPage = () => {
     const { movieId } = useParams();
   const location = useLocation();
     console.log(movieId);
-    // console.log(useParams());
+
     
   const [movie, setMovie] = useState(null);
 
@@ -23,8 +23,7 @@ const MovieDetailsPage = () => {
       });
     }, [movieId]);
     
-    console.log(movie);
-   
+      
   if (!movie) return <p>Завантаження...</p>;
 
   return (
