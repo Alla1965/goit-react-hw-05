@@ -12,10 +12,8 @@
 .movieContainer {
   display: flex;
   margin-left: 40px;
-  /* padding: 40px; */
   max-height: 450px;
   font-size: 16px;
-  /* width: 600px; */
 }
 .movieProperty {
   margin-left: 24px;

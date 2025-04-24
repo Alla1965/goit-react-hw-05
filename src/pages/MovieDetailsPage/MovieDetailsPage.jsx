@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef  } from 'react';
 import { getMovieDetails } from '../../services/tmdbAPI';
 import css from "./MovieDetailsPage.module.css"
 import { ArrowLeft } from 'lucide-react';
@@ -9,9 +9,11 @@ import { useParams, useLocation, Outlet, Link } from 'react-router-dom';
 const MovieDetailsPage = () => {
     const { movieId } = useParams();
   const location = useLocation();
-    console.log(movieId);
-
     
+// useRef для збереження попереднього місця переходу
+  const backLinkRef = useRef(location.state?.from ?? '/');
+
+  
   const [movie, setMovie] = useState(null);
 
     useEffect(() => {
@@ -28,14 +30,17 @@ const MovieDetailsPage = () => {
 
   return (
     <>
-      <Link to="/" className={css.btnBack}>
+      <Link to={backLinkRef.current} className={css.btnBack}>
   <ArrowLeft size={20} style={{ marginRight: '8px' }} />
   Go back
 </Link>
       
 
     <div className={css.movieContainer}>
-      <img src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} alt={movie.title} />
+        <img
+          src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+          alt={movie.title}
+        />
       <div className={css.movieProperty}>
         <h1 className={css.movieTitle}>{movie.title}({movie.release_date.slice(0, 4)})</h1>
   <p>Рейтинг: {movie.vote_average * 10}%</p>

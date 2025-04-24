@@ -9,17 +9,16 @@ const MovieCast = () => {
   const [cast, setCast] = useState([]);
 
   useEffect(() => {
-    //  if (!movieId) return;
+
     getMovieCredits(movieId)
       .then(({ data }) => setCast(data.cast))
       .catch(error => console.error('Error fetching movie cast:', error));
   }, [movieId]);
-// console.log(cast);
 
   if (cast.length === 0) {
     return <p>No cast information available.</p>;
   }
-// console.log(cast);
+
 
   return (
 

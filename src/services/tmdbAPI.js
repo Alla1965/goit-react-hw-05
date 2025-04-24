@@ -6,14 +6,6 @@ const options = {
     Authorization: `Bearer ${import.meta.env.VITE_TMDB_BEARER_TOKEN}`,
   },
 };
-// console.log('TOKEN:', import.meta.env.VITE_TMDB_BEARER_TOKEN);
-// const API_KEY = 'a6394cd2d233ba1d21d9add8f7a4b839'; // токен, який ти отримав у TMDB
-
-// const options = {
-//   headers: {
-//     Authorization: API_KEY,
-//   },
-// };
 
 export const fetchTrendingMovies = () =>
   // axios.get(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`, options);

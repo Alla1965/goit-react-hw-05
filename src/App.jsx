@@ -16,18 +16,17 @@ const App = () => (
   <>
     <Navigation />
     <Suspense fallback={<p>Loading...</p>}>
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} /> 
-
-
         <Route path="/movies/:movieId/*" element={<MovieDetailsPage />} >
          <Route path="cast" element={<MovieCast />} />
           <Route path="reviews" element={<MovieReviews />} />
             <Route path="*" element={<NotFoundPage />} />  
         </Route>
 
-       
+       <Route path="*" element={<NotFoundPage />} />  
       </Routes>
     </Suspense>
   </>

@@ -9,34 +9,39 @@ import css from "./MoviesPage.module.css"
 const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [error, setError] = useState(null); // нове 
+ const [errorMessage, setErrorMessage] = useState(null); // тільки одне джерело помилки
+ 
   const query = searchParams.get('query') || '';
+  
+  
   const location = useLocation();
 
    useEffect(() => {
     if (!query) return;
 
+
     searchMovies(query)
       .then(({ data }) => {
         if (data.results.length === 0) {
-          setError('No movies found. Try another query.');
+          setErrorMessage('No movies found. Try another query.');
           setMovies([]); 
         } else {
           setMovies(data.results);
-          setError(null);
+          setErrorMessage(null);
         }
       })
       .catch(err => {
-        setError('Сталася помилка під час пошуку. Спробуйте пізніше.');
+        setErrorMessage('Сталася помилка під час пошуку. Спробуйте пізніше.');
         console.error('Error searching movies:', err.message);
         setMovies([]);
       });
   }, [query]);
 
+
    const handleSubmit = e => {
     e.preventDefault();
-    const form = e.target;
-    const inputValue = form.elements.search.value.trim();
+         const inputValue = e.target.elements.search.value.trim();
+
 
     if (inputValue) {
       setSearchParams({ query: inputValue });
@@ -55,11 +60,8 @@ const MoviesPage = () => {
           placeholder="Enter the movie title..." />
         <button className={ css.btnSearch}type="submit">Search</button>
       </form>
-
-       {error && <NotFoundPage message={error} showHomeLink={false} />}
-      {!error && movies.length > 0 && <MovieList movies={movies} />}
-     
-      {/* {movies.length > 0 && <MovieList movies={movies} />} */}
+{errorMessage && <NotFoundPage message={errorMessage} />}
+      {movies.length > 0 && <MovieList movies={movies} location={location} />}
     </div>
   );
 };
